@@ -10,36 +10,184 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
+<body class="bg-gradient-to-b from-gray-950 via-purple-950 to-black text-white min-h-screen">
 
-    <body class="bg-gradient-to-b from-gray-950 via-purple-950 to-black text-white min-h-screen">
-
-        <nav class="bg-gradient-to-r from-purple-900 to-gray-950 shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
+    <!--Nav-->
+    <nav class="bg-gradient-to-r from-purple-900 to-gray-950 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
-                    <i class="fas fa-film text-white text-2xl"></i>
+                    <i class="fas fa-film text-primary text-2xl"></i>
                     <h1 class="text-2xl font-bold text-white">ENJOVIE</h1>
                 </div>
-                <div class="hidden md:flex space-x-6">
-                    <a href="#home" class="nav-link text-white hover:text-blue-500 transition-colors">Home</a>
-                    <a href="#search" class="nav-link text-white hover:text-blue-500 transition-colors">Search</a>
-                    <a href="#movies" class="nav-link text-white hover:text-blue-500 transition-colors">Movies</a>
-                    <a href="#trending" class="nav-link text-white hover:text-blue-500 transition-colors">Trending</a>
-                </div>
-                <button id="mobile-menu-btn" class="md:hidden text-white">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-
-            <div id="mobile-menu" class="md:hidden hidden pb-4">
-                <a href="#home" class="block py-2 text-white hover:text-blue-500">Home</a>
-                <a href="#search" class="block py-2 text-white hover:text-blue-500">Search</a>
-                <a href="#movies" class="block py-2 text-white hover:text-blue-500">Movies</a>
-                <a href="#trending" class="block py-2 text-white hover:text-blue-500">Trending</a>
+                <nav class="hidden md:flex space-x-6">
+                    <button onclick="showSection('home')"
+                        class="nav-btn text-gray-300 hover:text-primary transition-colors">Home</button>
+                    <button onclick="showSection('search')"
+                        class="nav-btn text-gray-300 hover:text-primary transition-colors">Search</button>
+                    <button onclick="showSection('discover')"
+                        class="nav-btn text-gray-300 hover:text-primary transition-colors">Discover</button>
+                    <button onclick="showSection('top-rated')"
+                        class="nav-btn text-gray-300 hover:text-primary transition-colors">Top Rated</button>
+                </nav>
             </div>
         </div>
     </nav>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <!--Home-->
+        <section id="home-section" class="section">
+            <div class="text-center mb-12">
+                <h2
+                    class="text-4xl font-bold mb-4 bg-gradient-to-r from-gray-200 to-white  bg-clip-text text-transparent">
+                    Your Gateway To Cinema
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Search for movies, discover new favorites, and explore detailed information about your favorite
+                    films.
+                </p>
+            </div>
+
+            <div class="max-w-2xl mx-auto mb-12">
+                <div class="relative">
+                    <input type="text" id="quick-search" placeholder="Search for any movie..."
+                        class="w-full px-6 py-4 bg-gray-800 border border-gray-700 rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                    <button onclick="quickSearch()"
+                        class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-primary to-secondary hover:from-blue-600 hover:to-purple-600  px-6 py-2 rounded-full transition-colors">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors cursor-pointer"
+                    onclick="showSection('discover')">
+                    <i class="fas fa-dice text-accent text-3xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Random Discovery</h3>
+                    <p class="text-gray-400">Find your next favorite movie with our random generator</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors cursor-pointer"
+                    onclick="showSection('search')">
+                    <i class="fas fa-search text-primary text-3xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Advanced Search</h3>
+                    <p class="text-gray-400">Search by title, keywords, or IMDb ID</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors cursor-pointer"
+                    onclick="showSection('top-rated')">
+                    <i class="fas fa-star text-accent text-3xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Top Rated</h3>
+                    <p class="text-gray-400">Explore critically acclaimed and popular movies</p>
+                </div>
+            </div>
+
+            <div id="quick-results" class="hidden">
+                <h3 class="text-2xl font-semibold mb-6">Search Results</h3>
+                <div id="quick-results-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+            </div>
+        </section>
+        <!--Search-->
+        <section id="search-section" class="section">
+            <h2 class="text-3xl font-bold mb-8 text-center">Advanced Movie Search</h2>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gray-800 p-6 rounded-lg mb-8">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Search by Title</label>
+                            <input type="text" id="title-search" placeholder="Enter movie title..."
+                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Search by Keywords</label>
+                            <input type="text" id="keyword-search" placeholder="e.g., spiderman, love, action..."
+                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">IMDb ID</label>
+                            <input type="text" id="imdb-search" placeholder="e.g., tt0111161"
+                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="advancedSearch()"
+                                class="w-full bg-gradient-to-r from-primary to-secondary hover:from-blue-600 hover:to-purple-600 px-6 py-3 rounded-lg font-semibold transition-colors">
+                                Search Movies
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Results -->
+                <div id="search-results" class="hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-semibold">Search Results</h3>
+                        <div id="results-count" class="text-gray-400"></div>
+                    </div>
+                    <div id="search-results-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+                </div>
+            </div>
+        </section>
+
+        <!--Discover-->
+        <section id="discover-section" class="section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Discover Random Movies</h2>
+                <p class="text-gray-400 mb-8">Not sure what to watch? Let us surprise you with amazing movie
+                    recommendations!</p>
+                <button onclick="discoverRandomMovie()"
+                    class="bg-gradient-to-r from-primary to-secondary hover:from-blue-600 hover:to-purple-600 px-8 py-4 rounded-full font-semibold text-lg transition-all transform hover:scale-105">
+                    <i class="fas fa-dice mr-2"></i>
+                    Discover a Movie
+                </button>
+            </div>
+
+            <div id="random-movie-result" class="max-w-4xl mx-auto hidden"></div>
+        </section>
+
+        <!--Top Rated-->
+        <section id="top-rated-section" class="section">
+            <h2 class="text-3xl font-bold mb-8 text-center">Top Rated & Popular Movies</h2>
+            <div id="top-rated-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        </section>
+
+        <!-- Movie Details Modal -->
+        <div id="movie-modal"
+            class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+            <div class="bg-gray-800 rounded-lg max-w-4xl w-full max-h-screen overflow-y-auto">
+                <div class="sticky top-0 bg-gray-800 p-4 border-b border-gray-700">
+                    <button onclick="closeModal()" class="float-right text-2xl hover:text-red-500 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <h2 class="text-2xl font-bold">Movie Details</h2>
+                </div>
+                <div id="movie-details-content" class="p-6"></div>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center">
+            <div class="bg-gray-800 p-8 rounded-lg text-center">
+                <i class="fas fa-spinner fa-spin text-4xl text-primary mb-4"></i>
+                <p class="text-lg">Loading movies...</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!--Footer-->
+    <footer class="bg-black/80 mt-16 p-4 text-white text-center">
+
+        <div class="container mx-auto px-4 py-8 text-center">
+            <div class="flex items-center justify-center space-x-2 mb-4">
+                <i class="fas fa-film text-primary"></i>
+                <span class="font-semibold">ENJOVIE</span>
+            </div>
+            <p class="text-gray-400">Powered by OMDb API - Your gateway to cinema</p>
+            <p class="text-sm text-gray-500 mt-2">@2025 All rights reserved</p>
+        </div>
+    </footer>
+
+
     <script src="assets/js/app.js"></script>
 
 </body>
